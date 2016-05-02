@@ -38,16 +38,17 @@ public class SpaceConquest {
         partie.placerLicoLand(2, 2);
         partie.placerLicoShip(5, 5);
         partie.placerZombificator(10, 3);
+        partie.placerVaisseauShadoks(2,3);
         //placement des objets célestes
         partie.placerObjetCeleste(new Etoile(), 3, 3);
-        
+        partie.placerObjetCeleste(new PlaneteShadoks(),2 ,1);
         
         partie.placerObjetCeleste(new Asteroide(), 4, 4);
         partie.placerObjetCeleste(new Asteroide(), 5, 4);
         partie.placerObjetCeleste(new Asteroide(), 5, 3);
         
         //on definit le mode de jeu
-        partie.setMode(Mode.automatique);
+        partie.setMode(Mode.manuel);
         //on lance l'IHM
         partie.start();
         

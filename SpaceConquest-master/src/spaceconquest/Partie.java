@@ -24,7 +24,7 @@ public class Partie {
     private Planete LicoLand;                                                   //monde d'origine des licornes
     private Vaisseau LicoShip;                                                  //Vaisseau Licorne
     private Vaisseau Zombificator;                                              //Vaisseau Zombie
-   
+    private Vaisseau VaisseauShadoks;
     private TimerPartie timer;                                                  //timer pour le mode automatique
     
     //Constructeur
@@ -54,6 +54,12 @@ public class Partie {
     public void placerZombificator(int i,int j) {
         this.Zombificator = new Vaisseau(Race.Zombie);
         this.carte.addVaisseau(Zombificator, i, j);
+    }
+    
+    //création du shadok 
+    public void placerVaisseauShadoks(int i,int j) {
+        this.VaisseauShadoks = new Vaisseau(Race.Shadoks);
+        this.carte.addVaisseau(VaisseauShadoks, i, j);
     }
     
     //création d'objet céleste
