@@ -90,7 +90,7 @@ public class Graphe {
     //affiche la matrice d'adjaceance
     @Override
     public String toString() {
-        String ret = "<html><center>Matrice du graphe :<br><br>";
+        String ret = "Matrice du graphe :\n\n";
         for(int i=1;i<=this.nbSommet;i++) {
             for(int j=1;j<=this.nbSommet;j++) {
                 Couple c = new Couple(i,j);
@@ -105,10 +105,9 @@ public class Graphe {
                 }
             }
             if(i<this.nbSommet) {
-                ret+="<br>";
+                ret+="\n";
             }
         }
-        ret += "</center></html>";
         return ret;
     }
     

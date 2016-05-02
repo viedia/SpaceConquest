@@ -146,38 +146,39 @@ public class Carte {
      */
     public Graphe getGrapheGrille(){
         int n = this.getTaille();
+        Graphe grapheGrille = new Graphe(3*n*n);
         for(int i = 1; i <= 3*n; i++){
             for(int j = 1; j <= n; j++){
                 if(n%2 == 0){ //si la taille de la grille est paire
                     if((i == 3*n-1) && (j == n)){ //la fichtre case du coin en bas à droite relié à une seule case
-                        this.graphe.modifierMatrice(n*(i-1)+j, n*i+j, 1);
+                        grapheGrille.modifierMatrice(n*(i-1)+j, n*i+j, 1);
                     }
                     else {
                         if((j == 1) && (i%2 == 0) && (i != 3*n)){ //relier 2 cases + case à gauche (que des lignes paires) et sauf le coin bas gauche
-                            this.graphe.modifierMatrice(n*(i-1)+j,n*i+j , 1);
-                            this.graphe.modifierMatrice(n*(i-1)+j, n*(i+1)+j, 1);
+                            grapheGrille.modifierMatrice(n*(i-1)+j,n*i+j , 1);
+                            grapheGrille.modifierMatrice(n*(i-1)+j, n*(i+1)+j, 1);
                         }
                         else { 
                             if((j == n) && (i%2 == 1)){//relier 2 cases + case à droite (sans la case du coin bas droit 
-                                this.graphe.modifierMatrice(n*(i-1)+j, n*(i+1)+j, 1);
-                                this.graphe.modifierMatrice(n*(i-1)+j, n*i+j, 1);
+                                grapheGrille.modifierMatrice(n*(i-1)+j, n*(i+1)+j, 1);
+                                grapheGrille.modifierMatrice(n*(i-1)+j, n*i+j, 1);
                             }
                             else{
                                 if(i == 3*n-1){ //relier 2 cases + cases du bas + cases sur ligne impaire
-                                    this.graphe.modifierMatrice(n*(i-1)+j, n*i+j, 1);
-                                    this.graphe.modifierMatrice(n*(i-1)+j, n*i+j+1, 1);
+                                    grapheGrille.modifierMatrice(n*(i-1)+j, n*i+j, 1);
+                                    grapheGrille.modifierMatrice(n*(i-1)+j, n*i+j+1, 1);
                                 }
                                 else{
                                     if((i%2 == 0) && (i != 3*n)){ //relier 3 cases + ligne paire
-                                        this.graphe.modifierMatrice(n*(i-1)+j, n*i+j-1, 1);
-                                        this.graphe.modifierMatrice(n*(i-1)+j, n*(i+1)+j, 1);
-                                        this.graphe.modifierMatrice(n*(i-1)+j, n*i+j, 1);
+                                        grapheGrille.modifierMatrice(n*(i-1)+j, n*i+j-1, 1);
+                                        grapheGrille.modifierMatrice(n*(i-1)+j, n*(i+1)+j, 1);
+                                        grapheGrille.modifierMatrice(n*(i-1)+j, n*i+j, 1);
                                     }
                                     else{
                                         if(i%2 == 1){ //relier 3 cases + ligne impaire
-                                            this.graphe.modifierMatrice(n*(i-1)+j, n*i+j, 1);
-                                            this.graphe.modifierMatrice(n*(i-1)+j, n*(i+1)+j, 1);
-                                            this.graphe.modifierMatrice(n*(i-1)+j, n*i+j+1, 1);
+                                            grapheGrille.modifierMatrice(n*(i-1)+j, n*i+j, 1);
+                                            grapheGrille.modifierMatrice(n*(i-1)+j, n*(i+1)+j, 1);
+                                            grapheGrille.modifierMatrice(n*(i-1)+j, n*i+j+1, 1);
                                         }
                                     }
                                 }
@@ -187,34 +188,34 @@ public class Carte {
                 }
                 else { //si elle est impaire
                     if((i == 3*n-1) && (j == 1)){ //la fichtre case du coin en bas à gauche relié à une seule case
-                        this.graphe.modifierMatrice(n*(i-1)+j, n*i+j, 1);
+                        grapheGrille.modifierMatrice(n*(i-1)+j, n*i+j, 1);
                     }
                     else {
                         if((j == 1) && (i%2 == 0)){ //relier 2 cases + case à gauche (que des lignes paires) et sauf le coin bas gauche
-                            this.graphe.modifierMatrice(n*(i-1)+j,n*i+j , 1);
-                            this.graphe.modifierMatrice(n*(i-1)+j, n*(i+1)+j, 1);
+                            grapheGrille.modifierMatrice(n*(i-1)+j,n*i+j , 1);
+                            grapheGrille.modifierMatrice(n*(i-1)+j, n*(i+1)+j, 1);
                         }
                         else { 
                             if((j == n) && (i%2 == 1) && (i != 3*n)){//relier 2 cases + case à droite (sans la case du coin bas droit déja traitée)
-                                this.graphe.modifierMatrice(n*(i-1)+j, n*(i+1)+j, 1);
-                                this.graphe.modifierMatrice(n*(i-1)+j, n*i+j, 1);
+                                grapheGrille.modifierMatrice(n*(i-1)+j, n*(i+1)+j, 1);
+                                grapheGrille.modifierMatrice(n*(i-1)+j, n*i+j, 1);
                             }
                             else{
                                 if(i == 3*n-1){ //relier 2 cases + cases du bas + cases sur ligne impaire
-                                    this.graphe.modifierMatrice(n*(i-1)+j, n*i+j-1, 1);
-                                    this.graphe.modifierMatrice(n*(i-1)+j, n*i+j, 1);
+                                    grapheGrille.modifierMatrice(n*(i-1)+j, n*i+j-1, 1);
+                                    grapheGrille.modifierMatrice(n*(i-1)+j, n*i+j, 1);
                                 }
                                 else{
                                     if((i%2 == 0) && (i != 3*n)){ //relier 3 cases + ligne paire
-                                        this.graphe.modifierMatrice(n*(i-1)+j, n*i+j-1, 1);
-                                        this.graphe.modifierMatrice(n*(i-1)+j, n*(i+1)+j, 1);
-                                        this.graphe.modifierMatrice(n*(i-1)+j, n*i+j, 1);
+                                        grapheGrille.modifierMatrice(n*(i-1)+j, n*i+j-1, 1);
+                                        grapheGrille.modifierMatrice(n*(i-1)+j, n*(i+1)+j, 1);
+                                        grapheGrille.modifierMatrice(n*(i-1)+j, n*i+j, 1);
                                     }
                                     else{
                                         if((i%2 == 1) && (i != 3*n)){ //relier 3 cases + ligne impaire
-                                            this.graphe.modifierMatrice(n*(i-1)+j, n*i+j, 1);
-                                            this.graphe.modifierMatrice(n*(i-1)+j, n*(i+1)+j, 1);
-                                            this.graphe.modifierMatrice(n*(i-1)+j, n*i+j+1, 1);
+                                            grapheGrille.modifierMatrice(n*(i-1)+j, n*i+j, 1);
+                                            grapheGrille.modifierMatrice(n*(i-1)+j, n*(i+1)+j, 1);
+                                            grapheGrille.modifierMatrice(n*(i-1)+j, n*i+j+1, 1);
                                         }
                                     }
                                 }
@@ -224,7 +225,7 @@ public class Carte {
                 }
             }
         }
-        return this.graphe;        
+        return grapheGrille;        
     }
     
     public Graphe getGrapheZombie(){
@@ -241,6 +242,7 @@ public class Carte {
                 }
             }
         }
+        System.out.println(zombGraphe);
         return zombGraphe;
     }
     
@@ -256,7 +258,7 @@ public class Carte {
             for(int j = 1; j <= n; j++){
                 //je commence par récupérer les voisins puis je regarde si ces voisins contiennet un astéroïde
                 int numSommet = n*(i-1)+j;
-                for(int k = 1; k <= this.getGraphe().getNbSommet(); k++){
+                for(int k = 1; k <= licoGraphe.getNbSommet(); k++){
                     if(licoGraphe.getMatrice(numSommet, k)==1){
                         if(this.getCase(sommetToCouple(k, taille)).getObjetCeleste() != null){
                             if("asteroide".equals(this.getCase(sommetToCouple(k, taille)).getObjetCeleste().getType())){
