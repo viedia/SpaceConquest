@@ -232,15 +232,7 @@ public class Carte {
         Graphe zombGraphe = this.getGrapheGrille();
        
         //parcours du graphe pour detecter où sont les étoiles
-        for(int i = 1; i <= 3*n; i++){
-            for(int j = 1; j <= n; j++){
-                if(this.getCase(i, j).getObjetCeleste() != null){
-                    if("etoile".equals(this.getCase(i, j).getObjetCeleste().getType())){
-                        zombGraphe.isolerSommet(n*(i-1)+j);
-                    }
-                }
-            }
-        }
+        isolerEtoile(zombGraphe);
         return zombGraphe;
     }
     
@@ -267,16 +259,23 @@ public class Carte {
                 }
             }
         }
-        for(int i = 1; i <= 3*n; i++){
-            for(int j = 1; j <= n; j++){
+        isolerEtoile(licoGraphe);
+        return licoGraphe;
+    }
+    /**
+     * Détecte et isole les étoiles présentes sur la carte
+     * @param g grahe où l'on doit isoler les sommet (soit celui du zombie soit celui de la licorne
+     */
+    public void isolerEtoile(Graphe g){
+       for(int i = 1; i <= 3*this.taille; i++){
+            for(int j = 1; j <= this.taille; j++){
                 if(this.getCase(i, j).getObjetCeleste() != null){
                     if("etoile".equals(this.getCase(i, j).getObjetCeleste().getType())){
-                        licoGraphe.isolerSommet(n*(i-1)+j);
+                        g.isolerSommet(this.taille*(i-1)+j);
                     }
                 }
             }
-        }
-        return licoGraphe;
+        } 
     }
     
     /**

@@ -55,6 +55,14 @@ public class Partie {
         this.Zombificator = new Vaisseau(Race.Zombie);
         this.carte.addVaisseau(Zombificator, i, j);
     }
+    //récupère le vaisseau licorne
+    public Vaisseau getLicoShip() {
+        return LicoShip;
+    }
+    //
+    public Vaisseau getZombificator() {
+        return Zombificator;
+    }
     
     //création d'objet céleste
     public void placerObjetCeleste(ObjetCeleste objet,int i,int j) {
@@ -88,7 +96,7 @@ public class Partie {
         else {
             tour = Race.Zombie;
         }
-        this.fenetre.refreshSide();
+        this.fenetre.repaint();
         
     }
     
