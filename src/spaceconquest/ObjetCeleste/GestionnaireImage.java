@@ -20,6 +20,7 @@ public class GestionnaireImage {
     
     private BufferedImage fond = null;                                          //image de fond
     private BufferedImage planete = null;                                       //image de la planete
+    private BufferedImage planeteShadoks = null;                                //image de la planete shadoks
     private BufferedImage etoile = null;                                        //image d'une étoile
     private BufferedImage asteroide = null;                                     //image d'un astéroide
     private HashMap<Race,BufferedImage> vaisseaux;                              //images des vaisseaux
@@ -30,15 +31,18 @@ public class GestionnaireImage {
         try {
             //chargement des images en mémoire
              this.fond = ImageIO.read(SpaceConquest.class.getResource("/fond.jpg"));
+             this.planeteShadoks = ImageIO.read(SpaceConquest.class.getResource("/planeteShadoks.png"));
              this.planete = ImageIO.read(SpaceConquest.class.getResource("/planete.png"));
              this.etoile = ImageIO.read(SpaceConquest.class.getResource("/etoile.png"));
              this.asteroide = ImageIO.read(SpaceConquest.class.getResource("/asteroide.png"));
              this.vaisseaux = new HashMap<>();
              this.vaisseaux.put(Race.Zombie, ImageIO.read(SpaceConquest.class.getResource("/vaisseauZombie.png")));
              this.vaisseaux.put(Race.Licorne, ImageIO.read(SpaceConquest.class.getResource("/vaisseauLicorne.png")));
+             this.vaisseaux.put(Race.Shadoks, ImageIO.read(SpaceConquest.class.getResource("/FuseShadoks.png")));
              this.joueurs = new HashMap<>();
              this.joueurs.put(Race.Zombie, ImageIO.read(SpaceConquest.class.getResource("/zombie.png")));
              this.joueurs.put(Race.Licorne, ImageIO.read(SpaceConquest.class.getResource("/licorne.png")));
+             this.joueurs.put(Race.Shadoks, ImageIO.read(SpaceConquest.class.getResource("/Shadoks.png")));
         }
         catch (IOException e) {
             //gestion d'erreur
@@ -79,5 +83,10 @@ public class GestionnaireImage {
     //getteur de l'image d'un joueur
     public BufferedImage getImageJoueur(Race r) {
         return this.joueurs.get(r);
+    }
+    //getteur de l'image d'une planete shadoks
+    public BufferedImage getImagePlaneteShadoks() {
+        System.out.println("planete shadoks");
+        return this.planeteShadoks;
     }
 }

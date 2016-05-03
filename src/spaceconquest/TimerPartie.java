@@ -59,33 +59,6 @@ public class TimerPartie extends Timer {
             }
         }
     
-        //ce qu'il se passe lors du tour des zombies
-      /*  private void tourDesZombies() {
-            //System.out.println("Tour des Zombies !");
-            
-            Couple posArr= this.partie.getLicoShip().getPosition();
-            Couple posZom = this.partie.getZombificator().getPosition();
-            
-            this.partie.getCarte().coloreCaseJaune(posZom.getX(), posZom.getY());
-            
-            int sommetArr = this.partie.getCarte().coupleToSommet(posArr);
-            int sommetDep = this.partie.getCarte().coupleToSommet(posZom);
-
-            Dijktra dij = new Dijktra (partie.getCarte().getGrapheZombie());
-            dij.CalculDistance(sommetDep);
-            
-            
-            int pred = dij.getPi()[sommetArr];
-            while (sommetDep!=pred ){
-                sommetArr = pred;
-                pred = dij.getPi()[sommetArr];
-                System.out.println(dij.getDist()[sommetArr]);
-            }
-            posArr = this.partie.getCarte().sommetToCouple(sommetArr,this.partie.getCarte().getTaille()); 
-            this.partie.getCarte().BougerVaisseau(posZom, posArr);
-            this.partie.getZombificator().setPosition(posArr);
-        
-        }*/
         public void tourDesZombies() {
             
             trans(partie.getCarte().getGrapheZombie());
