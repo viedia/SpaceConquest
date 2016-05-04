@@ -24,7 +24,8 @@ public class Partie {
     private Planete LicoLand;                                                   //monde d'origine des licornes
     private Vaisseau LicoShip;                                                  //Vaisseau Licorne
     private Vaisseau Zombificator;                                              //Vaisseau Zombie
-   
+    private Vaisseau FuseeShadoks;                                              //Vaisseau shadoks
+    
     private TimerPartie timer;                                                  //timer pour le mode automatique
     
     //Constructeur
@@ -36,6 +37,7 @@ public class Partie {
         this.LicoLand = null;
         this.LicoShip = null;
         this.Zombificator = null;
+        this.FuseeShadoks = null;
     }
     
     //création de LicoLand 
@@ -55,6 +57,18 @@ public class Partie {
         this.Zombificator = new Vaisseau(Race.Zombie);
         this.carte.addVaisseau(Zombificator, i, j);
     }
+    
+    //création du vaisseau shadoks
+    public void placerFuseeShadoks(int i, int j){
+        this.FuseeShadoks = new Vaisseau(Race.Shadoks);
+        this.carte.addVaisseau(FuseeShadoks, i, j);
+    }
+    
+    //récupère le vaisseau shadoks
+    public Vaisseau getFuseeShadoks() {
+        return FuseeShadoks;
+    }
+    
     //récupère le vaisseau licorne
     public Vaisseau getLicoShip() {
         return LicoShip;

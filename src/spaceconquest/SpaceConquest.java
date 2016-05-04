@@ -38,9 +38,10 @@ public class SpaceConquest {
         partie.placerLicoLand(2, 2);
         partie.placerLicoShip(5, 5);
         partie.placerZombificator(10, 3);
+        partie.placerFuseeShadoks(12, 2);
         //placement des objets célestes
         partie.placerObjetCeleste(new Etoile(), 3, 3);
-        
+        partie.placerObjetCeleste(new PlaneteShadoks(), 12, 1);
         
         partie.placerObjetCeleste(new Asteroide(), 4, 4);
         partie.placerObjetCeleste(new Asteroide(), 5, 4);
