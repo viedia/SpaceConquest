@@ -103,6 +103,10 @@ public class TimerPartie extends Timer {
         private void tourDesLicornes() {      
             System.out.println("Tour des Licornes !");
         }
+        
+        private void tourDesShadoks(){
+            System.out.println("Tour des Shadoks");
+        }
     }    
 }
 
