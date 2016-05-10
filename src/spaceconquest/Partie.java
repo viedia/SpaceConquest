@@ -69,13 +69,17 @@ public class Partie {
         return FuseeShadoks;
     }
     
-    //récupère le vaisseau licorne
+    //récupère le vaisseau des licornes
     public Vaisseau getLicoShip() {
         return LicoShip;
     }
-    //
+    //récupère le vaisseau des zombies
     public Vaisseau getZombificator() {
         return Zombificator;
+    }
+    //récupère LicoLand
+    public Planete getLicoLand() {
+        return LicoLand;
     }
     
     //création d'objet céleste
