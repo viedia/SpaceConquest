@@ -81,10 +81,6 @@ public class Partie {
     public Vaisseau getZombificator() {
         return Zombificator;
     }
-    //récupère LicoLand
-    public Planete getLicoLand() {
-        return LicoLand;
-    }
     
     //création d'objet céleste
     public void placerObjetCeleste(ObjetCeleste objet,int i,int j) {

@@ -63,9 +63,6 @@ public class TimerPartie extends Timer {
         }
     
         public void tourDesZombies() {
-                
-            System.out.println("Tour des Zombies !");
-            
             trans(partie.getCarte().getGrapheZombie()); //transpose le graphe des zombies
             Couple posDep= this.partie.getLicoShip().getPosition(); //récupère la position des licornes = position de départ car le graphe est transposé
             Couple posArr = this.partie.getZombificator().getPosition(); //récupère la position des zombies = position de d'arrivée car le graphe est transposé
@@ -105,18 +102,14 @@ public class TimerPartie extends Timer {
             }
         }
 //ce qu'il se passe lors du tour des licornes
-        private void tourDesLicornes() {   
-                
-            System.out.println("Tour des Licornes !");
-            
+        private void tourDesLicornes() {                    
             trans(partie.getCarte().getGrapheLicorne()); //transpose le graphe des licornes
-            Couple posDep= this.partie.getLicoLand().getPosition(); //récupère la position de la planette des licornes = position de départ car le graphe est transposé
             Couple posArr = this.partie.getLicoShip().getPosition(); //récupère la position des licornes = position de d'arrivée car le graphe est transposé
             Couple dessin; // case à colorier en jaune
             int pa=2;
             int sommetZ;
             int sommetArr= sommetZ = this.partie.getCarte().coupleToSommet(posArr); // traduit en sommet les couple posDep et posArr
-            int sommetDep = this.partie.getCarte().coupleToSommet(posDep);
+            int sommetDep = planeteProche(sommetArr);
              //j'effectue Dijkstra
             Dijktra dij = new Dijktra (partie.getCarte().getGrapheLicorne());
             dij.CalculDistance(sommetDep);
@@ -126,7 +119,7 @@ public class TimerPartie extends Timer {
             pa-=partie.getCarte().getGrapheLicorne().getMatrice(sommetArr, pred);
             pa-=partie.getCarte().getGrapheLicorne().getMatrice(pred, dij.getPi()[pred]); // On soustrait à pa le coût de deplacement entre la première case qu'il traverse et la seconde
             
-             // Si (les licornes et leurs planettes ne se suivent pas = ne sont pas côte à côte) ET ( pa est supérieur ou égal à 0 = on peut se déplacer de 2 cases)
+             // Si (les licornes et leurs planetes ne se suivent pas = ne sont pas côte à côte) ET ( pa est supérieur ou égal à 0 = on peut se déplacer de 2 cases)
             if ((dij.getPi()[sommetZ]!=sommetDep)&&((pa>=0))) {
                 sommetArr = pred; // je recule d'une case
                 dessin = this.partie.getCarte().sommetToCouple(pred,this.partie.getCarte().getTaille()); //récupère la case à colorier
@@ -134,14 +127,39 @@ public class TimerPartie extends Timer {
                 pred = dij.getPi()[sommetArr]; // récupère le pred du prédecesseur des licornes
             }
             this.partie.getCarte().coloreCaseVert(posArr.getX(), posArr.getY());//colorie
-            posDep = this.partie.getCarte().sommetToCouple(pred,this.partie.getCarte().getTaille()); //converti en Couple
+            Couple posDep = this.partie.getCarte().sommetToCouple(pred,this.partie.getCarte().getTaille()); //converti en Couple
             
             this.partie.getCarte().BougerVaisseau(posArr, posDep );    //déplace le vaisseau        
             this.partie.getLicoShip().setPosition(posDep); // met à jour la position du vaisseau licornes
         }
+        /**
+         * selectionne la plnète la plus proche
+         * @param reference sommet duquel ont cherche la planète la plus proche
+         * @return le numéro de sommet
+         */
+        private int planeteProche(int reference){
+            Dijktra dij = new Dijktra (partie.getCarte().getGrapheLicorne());
+            dij.CalculDistance(reference);
+            int min = dij.Infini();
+            int res = -1; 
+            for(int i = 1; i<= partie.getCarte().getTaille()*3; i++){
+                for(int j= 1; j<=partie.getCarte().getTaille();j++){
+                    if(this.partie.getCarte().getCase(i, j).getObjetCeleste() != null){
+                        String type = this.partie.getCarte().getCase(i, j).getObjetCeleste().getType();
+                        if("planete".equalsIgnoreCase(type) || "planete Shadoks".equalsIgnoreCase(type)){
+                            int obj = this.partie.getCarte().coupleToSommet(this.partie.getCarte().getCase(i, j).getObjetCeleste().getPosition());
+                            if(dij.getDist()[obj]< min){
+                                min = dij.getDist()[obj];
+                                res = obj;
+                            }
+                        }
+                    }    
+                }
+            }
+            return res;
+        }
         
         private void tourDesShadoks(){
-            System.out.println("Tour des Shadoks");
             //Variables
             Graphe grSha = this.partie.getCarte().getGrapheShadoks();
             Carte _carte = this.partie.getCarte();

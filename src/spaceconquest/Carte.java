@@ -77,11 +77,21 @@ public class Carte {
             System.exit(0);
         }
         if(this.getCase(arrivee).getVaisseau() != null) {
+            if(this.getCase(depart).getVaisseau().getRace() == Race.Licorne){
+                System.out.println("Le "+this.getCase(depart).getVaisseau() + " a été détruit !");
+                this.getCase(depart).getVaisseau().setPosition(null);
+            }
+            else{
             System.out.println("Le "+this.getCase(arrivee).getVaisseau() + " a été détruit !");
             this.getCase(arrivee).getVaisseau().setPosition(null);
+            this.getCase(arrivee).addVaisseau(this.getCase(depart).getVaisseau());
+            }
         }
+        else{
         this.getCase(arrivee).addVaisseau(this.getCase(depart).getVaisseau());
+        }
         this.getCase(depart).addVaisseau(null);
+        this.getCase(arrivee).getVaisseau().setPosition(arrivee);
     }
     
     public void deplacement(int[] dist){
@@ -261,7 +271,39 @@ public class Carte {
         
         isolerEtoile(licoGraphe);
         vadeRetroShadock(licoGraphe);
+        ViveLaVie(licoGraphe);
         return licoGraphe;
+    }
+    
+    /**
+     * empêche le sucide 
+     * @param g 
+     */
+    public void ViveLaVie(Graphe g){
+        int Z = trouverZombie(g);
+        System.out.println(Z);
+        if(Z>0){
+            g.isolerSommet(Z);
+        }
+    }
+    /**
+     * récupère la case où se situe es Shadocks
+     * @param g graphe dans lequel on doit chercher
+     * @return  
+     */
+     public int trouverZombie(Graphe g){
+        int Zom = -1;//sommet inexistant
+        for (int i = 1; i<= 3*this.getTaille(); i++){
+            for (int j = 1;  j<= this.getTaille(); j++){
+                if(this.getCase(i, j).getVaisseau() != null){
+                String nomV =this.getCase(i, j).getVaisseau().toString();
+                    if("croiseur Zombie".equals(nomV)){
+                            Zom = this.coupleToSommet(this.getCase(i, j).getVaisseau().getPosition());  
+                    }
+                }    
+            }
+        }
+        return Zom;
     }
     
     public Graphe getGrapheShadoks(){
@@ -276,10 +318,9 @@ public class Carte {
         }
         return grSha;
     }
-    
-    
+        
     /**
-     * récupère la case où se situe es Shadocks
+     * récupère la case où se situe les Shadocks
      * @param g 
      * @return  
      */
@@ -297,6 +338,11 @@ public class Carte {
         }
         return sha;
     }
+     /**
+      * localise la planète des Shadocks
+      * @param g 
+      * @return 
+      */
      
     public int trouverPlaneteShadock(Graphe g){
         int sha = -1;//sommet inexistant
@@ -313,79 +359,22 @@ public class Carte {
         return sha;
     } 
     
-     
+    /**
+     * ajoute les contraintes qui empêche un vaisseau d'approcher les Shadocks
+     * @param g graphe où ajouter les contraintes
+     */  
     public void vadeRetroShadock(Graphe g){
         Couple sha = this.trouverShadock(g);
         int Csha = this.coupleToSommet(sha);
-        /*if (sha != null){ //cas où le vaisseau Shadocks à été trouvé
-            int Csha = this.coupleToSommet(sha);
-            for(int i =1; i<= g.getNbSommet(); i++){
-                if(g.getMatrice(i, Csha)!=0){
-                    for(int j=1; j<=g.getNbSommet(); j++){
-                        if(g.getMatrice(j, i)!=0){
-                            g.isolerSommet(j);
-                        }
-                    }
-                    g.isolerSommet(i);
-                }           
-            }
-            g.isolerSommet(Csha);
-        }    */
-      Dijktra d = new Dijktra(g);
-      d.CalculDistance(Csha);
-      for (int i = 1; i< d.getDist().length; i++){
-          if(d.getDist()[i] == 1 || d.getDist()[i] == 2){
-              g.isolerSommet(i);
-          }
-      }
-    }
-     
-    /**
-     * récupère la case où se situe es Shadocks
-     * @param g 
-     * @return  
-     */
-     public Couple trouverShadock(Graphe g){
-        Couple sha = null;//sommet inexistant
-        for (int i = 1; i<= 3*this.getTaille(); i++){
-            for (int j = 1;  j<= this.getTaille(); j++){
-                if(this.getCase(i, j).getVaisseau() != null){
-                String nomV =this.getCase(i, j).getVaisseau().toString();
-                    if("fusée interplanétaire Shadock".equals(nomV)){
-                            sha = this.getCase(i, j).getVaisseau().getPosition();  
-                    }
-                }    
+        Dijktra d = new Dijktra(g);
+        d.CalculDistance(Csha);
+        for (int i = 1; i< d.getDist().length; i++){
+            if(d.getDist()[i] == 1 || d.getDist()[i] == 2){
+                g.isolerSommet(i);
             }
         }
-        return sha;
     }
-     
-    public void vadeRetroShadock(Graphe g){
-        Couple sha = this.trouverShadock(g);
-        int Csha = this.coupleToSommet(sha);
-        /*if (sha != null){ //cas où le vaisseau Shadocks à été trouvé
-            int Csha = this.coupleToSommet(sha);
-            for(int i =1; i<= g.getNbSommet(); i++){
-                if(g.getMatrice(i, Csha)!=0){
-                    for(int j=1; j<=g.getNbSommet(); j++){
-                        if(g.getMatrice(j, i)!=0){
-                            g.isolerSommet(j);
-                        }
-                    }
-                    g.isolerSommet(i);
-                }           
-            }
-            g.isolerSommet(Csha);
-        }    */
-      Dijktra d = new Dijktra(g);
-      d.CalculDistance(Csha);
-      for (int i = 1; i< d.getDist().length; i++){
-          if(d.getDist()[i] == 1 || d.getDist()[i] == 2){
-              g.isolerSommet(i);
-          }
-      }
-    }
-     
+          
     /**
      * Détecte et isole les étoiles présentes sur la carte
      * @param g grahe où l'on doit isoler les sommet (soit celui du zombie soit celui de la licorne
