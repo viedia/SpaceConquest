@@ -263,6 +263,83 @@ public class Carte {
         vadeRetroShadock(licoGraphe);
         return licoGraphe;
     }
+    
+    public Graphe getGrapheShadoks(){
+        int n = this.taille;
+        Graphe grSha = new Graphe(this.getGrapheGrille());
+        Dijktra dij = new Dijktra(grSha);
+        dij.CalculDistance(this.trouverPlaneteShadock(grSha));
+        for(int i = 1; i<= this.getGraphe().getNbSommet(); i++){
+           if(dij.getDist()[i] > 3){
+               grSha.isolerSommet(i);
+           }
+        }
+        return grSha;
+    }
+    
+    
+    /**
+     * récupère la case où se situe es Shadocks
+     * @param g 
+     * @return  
+     */
+     public Couple trouverShadock(Graphe g){
+        Couple sha = null;//sommet inexistant
+        for (int i = 1; i<= 3*this.getTaille(); i++){
+            for (int j = 1;  j<= this.getTaille(); j++){
+                if(this.getCase(i, j).getVaisseau() != null){
+                String nomV =this.getCase(i, j).getVaisseau().toString();
+                    if("fusée interplanétaire Shadock".equals(nomV)){
+                            sha = this.getCase(i, j).getVaisseau().getPosition();  
+                    }
+                }    
+            }
+        }
+        return sha;
+    }
+     
+    public int trouverPlaneteShadock(Graphe g){
+        int sha = -1;//sommet inexistant
+        for (int i = 1; i<= 3*this.getTaille(); i++){
+            for (int j = 1;  j<= this.getTaille(); j++){
+                if(this.getCase(i, j).getObjetCeleste() != null){
+                String nomV =this.getCase(i, j).getObjetCeleste().getType();
+                    if("planete Shadoks" ==(nomV)){
+                            sha = this.coupleToSommet(this.getCase(i, j).getObjetCeleste().getPosition());  
+                    }
+                }    
+            }
+        }
+        return sha;
+    } 
+    
+     
+    public void vadeRetroShadock(Graphe g){
+        Couple sha = this.trouverShadock(g);
+        int Csha = this.coupleToSommet(sha);
+        /*if (sha != null){ //cas où le vaisseau Shadocks à été trouvé
+            int Csha = this.coupleToSommet(sha);
+            for(int i =1; i<= g.getNbSommet(); i++){
+                if(g.getMatrice(i, Csha)!=0){
+                    for(int j=1; j<=g.getNbSommet(); j++){
+                        if(g.getMatrice(j, i)!=0){
+                            g.isolerSommet(j);
+                        }
+                    }
+                    g.isolerSommet(i);
+                }           
+            }
+            g.isolerSommet(Csha);
+        }    */
+      Dijktra d = new Dijktra(g);
+      d.CalculDistance(Csha);
+      for (int i = 1; i< d.getDist().length; i++){
+          if(d.getDist()[i] == 1 || d.getDist()[i] == 2){
+              g.isolerSommet(i);
+          }
+      }
+    }
+     
     /**
      * récupère la case où se situe es Shadocks
      * @param g 

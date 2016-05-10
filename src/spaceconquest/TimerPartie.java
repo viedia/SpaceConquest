@@ -5,6 +5,8 @@ package spaceconquest;
 
 import java.util.Timer;
 import java.util.TimerTask;
+import java.util.ArrayList;
+import java.util.Random;
 import spaceconquest.Map.Couple;
 import spaceconquest.Parties.Mode;
 
@@ -54,6 +56,7 @@ public class TimerPartie extends Timer {
                 switch(this.partie.getTour()) {
                     case Licorne : this.tourDesLicornes(); break;
                     case Zombie : this.tourDesZombies(); break;
+                    case Shadoks : this.tourDesShadoks(); break;
                 }
                     this.partie.tourSuivant();
             }
@@ -106,11 +109,10 @@ public class TimerPartie extends Timer {
                 
             System.out.println("Tour des Licornes !");
             
-             trans(partie.getCarte().getGrapheLicorne()); //transpose le graphe des licornes
+            trans(partie.getCarte().getGrapheLicorne()); //transpose le graphe des licornes
             Couple posDep= this.partie.getLicoLand().getPosition(); //récupère la position de la planette des licornes = position de départ car le graphe est transposé
             Couple posArr = this.partie.getLicoShip().getPosition(); //récupère la position des licornes = position de d'arrivée car le graphe est transposé
             Couple dessin; // case à colorier en jaune
-            
             int pa=2;
             int sommetZ;
             int sommetArr= sommetZ = this.partie.getCarte().coupleToSommet(posArr); // traduit en sommet les couple posDep et posArr
@@ -120,6 +122,7 @@ public class TimerPartie extends Timer {
             dij.CalculDistance(sommetDep);
            // récupère le prédesseceur de la case des licornes
             int pred = dij.getPi()[sommetArr];
+            
             pa-=partie.getCarte().getGrapheLicorne().getMatrice(sommetArr, pred);
             pa-=partie.getCarte().getGrapheLicorne().getMatrice(pred, dij.getPi()[pred]); // On soustrait à pa le coût de deplacement entre la première case qu'il traverse et la seconde
             
@@ -136,13 +139,33 @@ public class TimerPartie extends Timer {
             this.partie.getCarte().BougerVaisseau(posArr, posDep );    //déplace le vaisseau        
             this.partie.getLicoShip().setPosition(posDep); // met à jour la position du vaisseau licornes
         }
-            
-        }
         
         private void tourDesShadoks(){
             System.out.println("Tour des Shadoks");
+            //Variables
+            Graphe grSha = this.partie.getCarte().getGrapheShadoks();
+            Carte _carte = this.partie.getCarte();
+            
+            Dijktra dij = new Dijktra(grSha);
+            dij.CalculDistance(_carte.coupleToSommet(_carte.trouverShadock(grSha)));
+            ArrayList sommetDispo = new ArrayList();
+            //on met dans une liste les sommets accesibles auu shadoks
+            for(int i = 1; i <= grSha.getNbSommet(); i++){
+                if(dij.getDist()[i]<3 && dij.getDist()[i]>0){
+                    sommetDispo.add(i);
+                }
+            }
+            
+            //on se déplace aléatoirement sur une des cases des sommets dispo
+            Random r = new Random();
+            int pif = 1 + r.nextInt(sommetDispo.size()-1);
+            _carte.BougerVaisseau(_carte.trouverShadock(grSha), _carte.sommetToCouple((int)sommetDispo.get(pif), _carte.getTaille()));
+            this.partie.getFuseeShadoks().setPosition( _carte.sommetToCouple((int)sommetDispo.get(pif), _carte.getTaille()));
         }
-    }    
+        
+    }
+
+}
 
 
 
