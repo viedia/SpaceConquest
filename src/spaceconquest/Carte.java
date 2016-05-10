@@ -145,39 +145,40 @@ public class Carte {
      * @return le graphe modélisant la carte
      */
     public Graphe getGrapheGrille(){
+        Graphe g = new Graphe(graphe);
         int n = this.getTaille();
         for(int i = 1; i <= 3*n; i++){
             for(int j = 1; j <= n; j++){
                 if(n%2 == 0){ //si la taille de la grille est paire
                     if((i == 3*n-1) && (j == n)){ //la fichtre case du coin en bas à droite relié à une seule case
-                        this.graphe.modifierMatrice(n*(i-1)+j, n*i+j, 1);
+                        g.modifierMatrice(n*(i-1)+j, n*i+j, 1);
                     }
                     else {
                         if((j == 1) && (i%2 == 0) && (i != 3*n)){ //relier 2 cases + case à gauche (que des lignes paires) et sauf le coin bas gauche
-                            this.graphe.modifierMatrice(n*(i-1)+j,n*i+j , 1);
-                            this.graphe.modifierMatrice(n*(i-1)+j, n*(i+1)+j, 1);
+                            g.modifierMatrice(n*(i-1)+j,n*i+j , 1);
+                            g.modifierMatrice(n*(i-1)+j, n*(i+1)+j, 1);
                         }
                         else { 
                             if((j == n) && (i%2 == 1)){//relier 2 cases + case à droite (sans la case du coin bas droit 
-                                this.graphe.modifierMatrice(n*(i-1)+j, n*(i+1)+j, 1);
-                                this.graphe.modifierMatrice(n*(i-1)+j, n*i+j, 1);
+                                g.modifierMatrice(n*(i-1)+j, n*(i+1)+j, 1);
+                                g.modifierMatrice(n*(i-1)+j, n*i+j, 1);
                             }
                             else{
                                 if(i == 3*n-1){ //relier 2 cases + cases du bas + cases sur ligne impaire
-                                    this.graphe.modifierMatrice(n*(i-1)+j, n*i+j, 1);
-                                    this.graphe.modifierMatrice(n*(i-1)+j, n*i+j+1, 1);
+                                    g.modifierMatrice(n*(i-1)+j, n*i+j, 1);
+                                    g.modifierMatrice(n*(i-1)+j, n*i+j+1, 1);
                                 }
                                 else{
                                     if((i%2 == 0) && (i != 3*n)){ //relier 3 cases + ligne paire
-                                        this.graphe.modifierMatrice(n*(i-1)+j, n*i+j-1, 1);
-                                        this.graphe.modifierMatrice(n*(i-1)+j, n*(i+1)+j, 1);
-                                        this.graphe.modifierMatrice(n*(i-1)+j, n*i+j, 1);
+                                        g.modifierMatrice(n*(i-1)+j, n*i+j-1, 1);
+                                        g.modifierMatrice(n*(i-1)+j, n*(i+1)+j, 1);
+                                        g.modifierMatrice(n*(i-1)+j, n*i+j, 1);
                                     }
                                     else{
                                         if(i%2 == 1){ //relier 3 cases + ligne impaire
-                                            this.graphe.modifierMatrice(n*(i-1)+j, n*i+j, 1);
-                                            this.graphe.modifierMatrice(n*(i-1)+j, n*(i+1)+j, 1);
-                                            this.graphe.modifierMatrice(n*(i-1)+j, n*i+j+1, 1);
+                                            g.modifierMatrice(n*(i-1)+j, n*i+j, 1);
+                                            g.modifierMatrice(n*(i-1)+j, n*(i+1)+j, 1);
+                                            g.modifierMatrice(n*(i-1)+j, n*i+j+1, 1);
                                         }
                                     }
                                 }
@@ -187,34 +188,34 @@ public class Carte {
                 }
                 else { //si elle est impaire
                     if((i == 3*n-1) && (j == 1)){ //la fichtre case du coin en bas à gauche relié à une seule case
-                        this.graphe.modifierMatrice(n*(i-1)+j, n*i+j, 1);
+                        g.modifierMatrice(n*(i-1)+j, n*i+j, 1);
                     }
                     else {
                         if((j == 1) && (i%2 == 0)){ //relier 2 cases + case à gauche (que des lignes paires) et sauf le coin bas gauche
-                            this.graphe.modifierMatrice(n*(i-1)+j,n*i+j , 1);
-                            this.graphe.modifierMatrice(n*(i-1)+j, n*(i+1)+j, 1);
+                            g.modifierMatrice(n*(i-1)+j,n*i+j , 1);
+                            g.modifierMatrice(n*(i-1)+j, n*(i+1)+j, 1);
                         }
                         else { 
                             if((j == n) && (i%2 == 1) && (i != 3*n)){//relier 2 cases + case à droite (sans la case du coin bas droit déja traitée)
-                                this.graphe.modifierMatrice(n*(i-1)+j, n*(i+1)+j, 1);
-                                this.graphe.modifierMatrice(n*(i-1)+j, n*i+j, 1);
+                                g.modifierMatrice(n*(i-1)+j, n*(i+1)+j, 1);
+                                g.modifierMatrice(n*(i-1)+j, n*i+j, 1);
                             }
                             else{
                                 if(i == 3*n-1){ //relier 2 cases + cases du bas + cases sur ligne impaire
-                                    this.graphe.modifierMatrice(n*(i-1)+j, n*i+j-1, 1);
-                                    this.graphe.modifierMatrice(n*(i-1)+j, n*i+j, 1);
+                                    g.modifierMatrice(n*(i-1)+j, n*i+j-1, 1);
+                                    g.modifierMatrice(n*(i-1)+j, n*i+j, 1);
                                 }
                                 else{
                                     if((i%2 == 0) && (i != 3*n)){ //relier 3 cases + ligne paire
-                                        this.graphe.modifierMatrice(n*(i-1)+j, n*i+j-1, 1);
-                                        this.graphe.modifierMatrice(n*(i-1)+j, n*(i+1)+j, 1);
-                                        this.graphe.modifierMatrice(n*(i-1)+j, n*i+j, 1);
+                                        g.modifierMatrice(n*(i-1)+j, n*i+j-1, 1);
+                                        g.modifierMatrice(n*(i-1)+j, n*(i+1)+j, 1);
+                                        g.modifierMatrice(n*(i-1)+j, n*i+j, 1);
                                     }
                                     else{
                                         if((i%2 == 1) && (i != 3*n)){ //relier 3 cases + ligne impaire
-                                            this.graphe.modifierMatrice(n*(i-1)+j, n*i+j, 1);
-                                            this.graphe.modifierMatrice(n*(i-1)+j, n*(i+1)+j, 1);
-                                            this.graphe.modifierMatrice(n*(i-1)+j, n*i+j+1, 1);
+                                            g.modifierMatrice(n*(i-1)+j, n*i+j, 1);
+                                            g.modifierMatrice(n*(i-1)+j, n*(i+1)+j, 1);
+                                            g.modifierMatrice(n*(i-1)+j, n*i+j+1, 1);
                                         }
                                     }
                                 }
@@ -224,7 +225,7 @@ public class Carte {
                 }
             }
         }
-        return this.graphe;        
+        return g;        
     }
     
     public Graphe getGrapheZombie(){
@@ -244,24 +245,100 @@ public class Carte {
         int n = this.taille;
         Graphe licoGraphe = this.getGrapheGrille();
         licoGraphe.setOrientation(true);
-        for(int i = 1; i <= 3*n; i++){
-            for(int j = 1; j <= n; j++){
+        for(int i = 1; i <= this.getGraphe().getNbSommet(); i++){  
                 //je commence par récupérer les voisins puis je regarde si ces voisins contiennet un astéroïde
-                int numSommet = n*(i-1)+j;
-                for(int k = 1; k <= this.getGraphe().getNbSommet(); k++){
-                    if(licoGraphe.getMatrice(numSommet, k)==1){
-                        if(this.getCase(sommetToCouple(k, taille)).getObjetCeleste() != null){
-                            if("asteroide".equals(this.getCase(sommetToCouple(k, taille)).getObjetCeleste().getType())){
-                                licoGraphe.modifierMatrice(numSommet, k, 2); 
-                            }
+            for(int k = 1; k <= this.getGraphe().getNbSommet(); k++){
+                if(licoGraphe.getMatrice(i, k)==1){
+                    if(this.getCase(sommetToCouple(k, taille)).getObjetCeleste() != null){
+                        if("asteroide".equals(this.getCase(sommetToCouple(k, taille)).getObjetCeleste().getType())){
+                            licoGraphe.modifierMatrice(i, k, 2); 
                         }
                     }
                 }
             }
+            
         }
         isolerEtoile(licoGraphe);
+        vadeRetroShadock(licoGraphe);
         return licoGraphe;
     }
+    
+    public Graphe getGrapheShadoks(){
+        int n = this.taille;
+        Graphe grSha = new Graphe(this.getGrapheGrille());
+        Dijktra dij = new Dijktra(grSha);
+        dij.CalculDistance(this.trouverPlaneteShadock(grSha));
+        for(int i = 1; i<= this.getGraphe().getNbSommet(); i++){
+           if(dij.getDist()[i] > 3){
+               grSha.isolerSommet(i);
+           }
+        }
+        return grSha;
+    }
+    
+    
+    /**
+     * récupère la case où se situe es Shadocks
+     * @param g 
+     * @return  
+     */
+     public Couple trouverShadock(Graphe g){
+        Couple sha = null;//sommet inexistant
+        for (int i = 1; i<= 3*this.getTaille(); i++){
+            for (int j = 1;  j<= this.getTaille(); j++){
+                if(this.getCase(i, j).getVaisseau() != null){
+                String nomV =this.getCase(i, j).getVaisseau().toString();
+                    if("fusée interplanétaire Shadock".equals(nomV)){
+                            sha = this.getCase(i, j).getVaisseau().getPosition();  
+                    }
+                }    
+            }
+        }
+        return sha;
+    }
+     
+    public int trouverPlaneteShadock(Graphe g){
+        int sha = -1;//sommet inexistant
+        for (int i = 1; i<= 3*this.getTaille(); i++){
+            for (int j = 1;  j<= this.getTaille(); j++){
+                if(this.getCase(i, j).getObjetCeleste() != null){
+                String nomV =this.getCase(i, j).getObjetCeleste().getType();
+                    if("planete Shadoks" ==(nomV)){
+                            sha = this.coupleToSommet(this.getCase(i, j).getObjetCeleste().getPosition());  
+                    }
+                }    
+            }
+        }
+        return sha;
+    } 
+    
+     
+    public void vadeRetroShadock(Graphe g){
+        Couple sha = this.trouverShadock(g);
+        int Csha = this.coupleToSommet(sha);
+        /*if (sha != null){ //cas où le vaisseau Shadocks à été trouvé
+            int Csha = this.coupleToSommet(sha);
+            for(int i =1; i<= g.getNbSommet(); i++){
+                if(g.getMatrice(i, Csha)!=0){
+                    for(int j=1; j<=g.getNbSommet(); j++){
+                        if(g.getMatrice(j, i)!=0){
+                            g.isolerSommet(j);
+                        }
+                    }
+                    g.isolerSommet(i);
+                }           
+            }
+            g.isolerSommet(Csha);
+        }    */
+      Dijktra d = new Dijktra(g);
+      d.CalculDistance(Csha);
+      for (int i = 1; i< d.getDist().length; i++){
+          if(d.getDist()[i] == 1 || d.getDist()[i] == 2){
+              g.isolerSommet(i);
+          }
+      }
+    }
+     
     /**
      * Détecte et isole les étoiles présentes sur la carte
      * @param g grahe où l'on doit isoler les sommet (soit celui du zombie soit celui de la licorne

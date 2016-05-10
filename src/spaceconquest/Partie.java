@@ -45,6 +45,10 @@ public class Partie {
         LicoLand = new Planete();
         this.carte.addObjetCeleste(LicoLand, i, j);
     }
+
+    public Planete getLicoLand() {
+        return LicoLand;
+    }
     
     //création du LicoShip 
     public void placerLicoShip(int i,int j) {
@@ -104,11 +108,23 @@ public class Partie {
     
     //passe le tour (dans les deux modes de jeu)
     public void tourSuivant() {
-        if(tour == Race.Zombie) {
-            tour = Race.Licorne;
-        }
-        else {
-            tour = Race.Zombie;
+        if(this.getMode() == this.getMode().manuel)
+            if(tour == Race.Zombie) {
+                tour = Race.Licorne;
+            }
+            else {
+                tour = Race.Zombie;
+            }
+        else if(this.getMode() == this.getMode().automatique){
+            if(tour == Race.Shadoks) {
+                tour = Race.Licorne;
+            }
+            else if(tour == Race.Licorne){
+                tour = Race.Zombie;
+            }
+            else if(tour == Race.Zombie){
+                tour = Race.Shadoks;
+            }
         }
         this.fenetre.repaint();
         
