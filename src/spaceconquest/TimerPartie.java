@@ -110,7 +110,8 @@ public class TimerPartie extends Timer {
             Couple posDep= this.partie.getLicoLand().getPosition(); //récupère la position de la planette des licornes = position de départ car le graphe est transposé
             Couple posArr = this.partie.getLicoShip().getPosition(); //récupère la position des licornes = position de d'arrivée car le graphe est transposé
             Couple dessin; // case à colorier en jaune
-
+            
+            int pa=2;
             int sommetZ;
             int sommetArr= sommetZ = this.partie.getCarte().coupleToSommet(posArr); // traduit en sommet les couple posDep et posArr
             int sommetDep = this.partie.getCarte().coupleToSommet(posDep);
@@ -119,14 +120,17 @@ public class TimerPartie extends Timer {
             dij.CalculDistance(sommetDep);
            // récupère le prédesseceur de la case des licornes
             int pred = dij.getPi()[sommetArr];
-            // si les licornes et leurs planettes ne se suivent pas = ne sont pas côte à côte
-            if (dij.getPi()[sommetZ]!=sommetDep) {
+            pa-=partie.getCarte().getGrapheLicorne().getMatrice(sommetArr, pred);
+            pa-=partie.getCarte().getGrapheLicorne().getMatrice(pred, dij.getPi()[pred]); // On soustrait à pa le coût de deplacement entre la première case qu'il traverse et la seconde
+            
+             // Si (les licornes et leurs planettes ne se suivent pas = ne sont pas côte à côte) ET ( pa est supérieur ou égal à 0 = on peut se déplacer de 2 cases)
+            if ((dij.getPi()[sommetZ]!=sommetDep)&&((pa>=0))) {
                 sommetArr = pred; // je recule d'une case
                 dessin = this.partie.getCarte().sommetToCouple(pred,this.partie.getCarte().getTaille()); //récupère la case à colorier
-                this.partie.getCarte().coloreCaseJaune(dessin.getX(), dessin.getY());// je colorie la premère case 
+                this.partie.getCarte().coloreCaseVert(dessin.getX(), dessin.getY());// je colorie la premère case 
                 pred = dij.getPi()[sommetArr]; // récupère le pred du prédecesseur des licornes
             }
-            this.partie.getCarte().coloreCaseJaune(posArr.getX(), posArr.getY());//colorie
+            this.partie.getCarte().coloreCaseVert(posArr.getX(), posArr.getY());//colorie
             posDep = this.partie.getCarte().sommetToCouple(pred,this.partie.getCarte().getTaille()); //converti en Couple
             
             this.partie.getCarte().BougerVaisseau(posArr, posDep );    //déplace le vaisseau        
