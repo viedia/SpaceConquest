@@ -281,7 +281,6 @@ public class Carte {
      */
     public void ViveLaVie(Graphe g){
         int Z = trouverZombie(g);
-        System.out.println(Z);
         if(Z>0){
             g.isolerSommet(Z);
         }
@@ -365,12 +364,14 @@ public class Carte {
      */  
     public void vadeRetroShadock(Graphe g){
         Couple sha = this.trouverShadock(g);
-        int Csha = this.coupleToSommet(sha);
-        Dijktra d = new Dijktra(g);
-        d.CalculDistance(Csha);
-        for (int i = 1; i< d.getDist().length; i++){
-            if(d.getDist()[i] == 1 || d.getDist()[i] == 2){
-                g.isolerSommet(i);
+        if (sha != null){
+            int Csha = this.coupleToSommet(sha);
+            Dijktra d = new Dijktra(g);
+            d.CalculDistance(Csha);
+            for (int i = 1; i< d.getDist().length; i++){
+                if(d.getDist()[i] == 1 || d.getDist()[i] == 2){
+                    g.isolerSommet(i);
+                }
             }
         }
     }

@@ -161,24 +161,31 @@ public class TimerPartie extends Timer {
         
         private void tourDesShadoks(){
             //Variables
+            
             Graphe grSha = this.partie.getCarte().getGrapheShadoks();
             Carte _carte = this.partie.getCarte();
+            Couple dessin; // case à colorier en rouge
+            Couple pos = _carte.trouverShadock(grSha); // localisation des shadocks;
+            this.partie.getCarte().coloreCaseRouge(pos.getX(), pos.getY());//colorie
             
             Dijktra dij = new Dijktra(grSha);
-            dij.CalculDistance(_carte.coupleToSommet(_carte.trouverShadock(grSha)));
-            ArrayList sommetDispo = new ArrayList();
+            dij.CalculDistance(_carte.coupleToSommet(pos));
+            ArrayList<Integer> sommetDispo = new ArrayList();
             //on met dans une liste les sommets accesibles auu shadoks
             for(int i = 1; i <= grSha.getNbSommet(); i++){
                 if(dij.getDist()[i]<3 && dij.getDist()[i]>0){
                     sommetDispo.add(i);
                 }
-            }
-            
+            }          
             //on se déplace aléatoirement sur une des cases des sommets dispo
             Random r = new Random();
-            int pif = 1 + r.nextInt(sommetDispo.size()-1);
-            _carte.BougerVaisseau(_carte.trouverShadock(grSha), _carte.sommetToCouple((int)sommetDispo.get(pif), _carte.getTaille()));
-            this.partie.getFuseeShadoks().setPosition( _carte.sommetToCouple((int)sommetDispo.get(pif), _carte.getTaille()));
+            int pif = sommetDispo.get(r.nextInt(1+sommetDispo.size()-1));
+            if (dij.getDist()[pif] == 2){
+                Couple pred = _carte.sommetToCouple(dij.getPi()[pif],_carte.getTaille());
+                this.partie.getCarte().coloreCaseRouge(pred.getX(), pred.getY());//colorie
+            }
+            _carte.BougerVaisseau(pos, _carte.sommetToCouple(pif, _carte.getTaille()));
+            this.partie.getFuseeShadoks().setPosition( _carte.sommetToCouple(pif, _carte.getTaille()));        
         }
         
     }
