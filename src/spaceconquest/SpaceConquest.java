@@ -31,8 +31,12 @@ public class SpaceConquest {
         partie.tourSuivant();
     }
     
-    public static void main(String[] args) {
-        //on cree la partie
+    /**
+     * lance le plateau de jeu
+     * @param s le mode de jeu (manuel, automatique)
+     */
+    public void lancerJeu(Mode s){
+     //on cree la partie
         partie = new Partie(5);
         //ajout des éléments clé de la partie
         partie.placerLicoLand(2, 2);
@@ -49,7 +53,7 @@ public class SpaceConquest {
         
         
         //on definit le mode de jeu
-        partie.setMode(Mode.automatique);
+        partie.setMode(s);
             if(partie.getMode() == Mode.automatique){
                 partie.placerFuseeShadoks(12, 2);    
                 partie.placerObjetCeleste(new PlaneteShadoks(), 12, 1);  
@@ -58,4 +62,14 @@ public class SpaceConquest {
         partie.start();
         
     }  
+    
+    
+    public static void main(String[] args) {
+        
+        
+    }
+       
+    
+
+    
 }

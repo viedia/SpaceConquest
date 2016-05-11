@@ -179,7 +179,7 @@ public class TimerPartie extends Timer {
             }          
             //on se déplace aléatoirement sur une des cases des sommets dispo
             Random r = new Random();
-            int pif = sommetDispo.get(r.nextInt(1+sommetDispo.size()-1));
+            int pif = sommetDispo.get(r.nextInt(sommetDispo.size()-1));
             if (dij.getDist()[pif] == 2){
                 Couple pred = _carte.sommetToCouple(dij.getPi()[pif],_carte.getTaille());
                 this.partie.getCarte().coloreCaseRouge(pred.getX(), pred.getY());//colorie
